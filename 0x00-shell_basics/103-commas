@@ -1,0 +1,3 @@
+#!/bin/bash
+ls -alF --format=comma 
+echo -e "\n"
