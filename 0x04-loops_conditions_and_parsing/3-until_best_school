@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# This script is used to print best school using the until loop.
+
+i=0
+until [[ "$i" = 10 ]]; do
+	echo "Best School"
+	i=$((i+1))
+done
