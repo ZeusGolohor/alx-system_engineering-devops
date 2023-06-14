@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Bash script that displays the current directory.
 
-dirs="$(find . -not -name ".*" -not -name ".*" | cut --complement -d "-" -f 1)"
+dirs="$(find . -not -name ".*" -not -name ".*" | cut --complement -d "-" -d "/" -f 1)"
 for args in $dirs; do
 	echo "$args"
 done
