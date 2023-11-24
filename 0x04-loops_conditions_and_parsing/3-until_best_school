@@ -3,7 +3,7 @@
 
 sen="Best School"
 i=10
-while ((i>0)); do
+until ((i<0)); do
 	echo "$sen"
 	i=$((i-1))
 done
