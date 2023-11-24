@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# A bash script to print a sentence multiple times
+
+sen="Best School"
+for ((i=0; i<10; i+=1)); do
+	echo "$sen"
+done
