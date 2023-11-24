@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 # A script to show untill loop usage
 
-sen="Best School"
 i=0
-until [[ "$i" = 10]]; do
-	echo "$sen"
+until [[ "$i" = 10 ]]; do
+	echo "Best School"
 	i=$((i+1))
 done
