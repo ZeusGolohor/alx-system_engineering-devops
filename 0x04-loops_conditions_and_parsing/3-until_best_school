@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# A script to show untill loop usage
+
+sen="Best School"
+i=10
+while ((i>0)); do
+	echo "$sen"
+	i=$((i-1))
+done
