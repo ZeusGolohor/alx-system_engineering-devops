@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# A script to show while loop usage
+
+sen="Best School"
+i=0
+while ((i<10)); do
+	echo "$sen"
+	i=$((i+1))
+done
