@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# A scprit to illustrate loops
+
+list="$(ls)"
+for i in $list; do
+	echo "$i"
+done
