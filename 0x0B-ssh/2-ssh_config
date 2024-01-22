@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Your machine has an SSH configuration file for the local SSH client
+Host web-01
+    HostName 54.146.73.192
+    User ubuntu
+    PasswordAuthentication no
+    IdentityFile ~/.ssh/school
+    PreferredAuthentications publickey
