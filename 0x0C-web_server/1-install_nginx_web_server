@@ -14,6 +14,8 @@ ssh-add "$SSH_KEY_PATH"
 ssh -i "$SSH_KEY_PATH" "$REMOTE_USER@$REMOTE_IP" <<EOF
     sudo apt-get -y update
     sudo apt-get -y install nginx
+    sudo chown -R "$USER":"$USER" /var/www/html
+    sudo chmod -R 755 /var/www
     sudo rm /var/www/html/index.nginx-debian.html
     echo 'Hello World!' | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
     sudo ufw allow 'Nginx HTTP'
