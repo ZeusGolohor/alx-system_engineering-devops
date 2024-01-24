@@ -9,5 +9,8 @@ sudo rm /var/www/html/index.nginx-debian.html
 echo 'Hello World!' | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
 sudo ufw allow 'Nginx HTTP'
 new_string="server_name _;\\n\\n\\tlocation /redirect_me {\\n\\t\\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\\n\\t}"
-sudo sed -i "\#location /redirect_me# ! s#server_name _;#$new_string#" /etc/nginx/sites-available/default
+sudo sed -i "\#location /redirect_me# {
+    s#server_name _;#$new_string#
+    b
+  }" /etc/nginx/sites-available/default
 sudo service nginx restart
