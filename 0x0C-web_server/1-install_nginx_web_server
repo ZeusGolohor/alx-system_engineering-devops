@@ -2,25 +2,13 @@
 # Install nginx web server
 
 # Define variables
-SSH_KEY_PATH="$HOME/.ssh/school"
-REMOTE_USER="ubuntu"
-REMOTE_IP="54.146.73.192"
 
-# addind agent and password
-eval "$(ssh-agent -s)"
-ssh-add "$SSH_KEY_PATH"
-
-# Log in to remote server and execute commands
-ssh -i "$SSH_KEY_PATH" "$REMOTE_USER@$REMOTE_IP" <<EOF
-    sudo apt-get -y update
-    sudo apt-get -y install nginx
-    sudo service nginx start
-    sudo chown -R "$USER":"$USER" /var/www/html
-    sudo chmod -R 755 /var/www
-    sudo rm /var/www/html/index.nginx-debian.html
-    echo 'Hello World!' | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
-    sudo ufw allow 'Nginx HTTP'
-    sudo service nginx restart
-EOF
-
-ssh-agent -k
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo service nginx start
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+sudo rm /var/www/html/index.nginx-debian.html
+echo 'Hello World!' | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+sudo ufw allow 'Nginx HTTP'
+sudo service nginx restart
