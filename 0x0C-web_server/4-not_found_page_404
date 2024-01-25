@@ -8,12 +8,15 @@ sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 sudo rm /var/www/html/index.nginx-debian.html
 echo 'Hello World!' | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/error_404.html
 sudo ufw allow 'Nginx HTTP'
 # Check if the location block already exists
-if ! grep -q "location /redirect_me" "$config_file"; then
+if ! grep -q "error_page 404 /error_404.html;" "$config_file"; then
     new_string=$(cat <<-EOL
         server_name _;
 
+        error_page 404 /error_404.html;
+        
         location /redirect_me {
             return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
         }
