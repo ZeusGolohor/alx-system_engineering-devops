@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Install and configure HAproxy on your lb-01 server.
+config_file="/etc/haproxy/haproxy.cfg"
+#updating the system
+sudo apt-get -y update
+# installing HAproxy
+sudo apt-get install -y haproxy
+# check if frontend block is present
+if ! grep -q "frontend http_frontend" "$config_file"; then
+    new_string=$(cat <<-EOL
+\terrorfile 504 /etc/haproxy/errors/504.http
+\nfrontend http_frontend
+\tbind *:80
+\tstats uri /haproxy?statistics
+\tdefault_backend http_backend
+\nbackend http_backend
+\tbalance roundrobin
+\tserver 128278-web-01 54.146.73.192:80 check
+\t server 128278-web-02 18.234.169.222:80 check
+\n
+EOL
+    )
+
+    # Use awk to replace the "server_name _;" line with the new configuration block
+    awk -v new_string="$new_string" '/errorfile 504/ { print new_string; next }1' "$config_file" > "$config_file.tmp"
+
+    # Replace the original configuration file with the temporary file
+    sudo mv "$config_file.tmp" "$config_file"
+fi
+
+# start
+sudo service haproxy restart
