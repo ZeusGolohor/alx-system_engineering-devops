@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# to configure web-02 to be identical to web-01.
+config_file="/etc/nginx/sites-available/default"
+name=$(hostname)
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo service nginx start
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+sudo rm /var/www/html/index.nginx-debian.html
+echo 'Hello World!' | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/error_404.html
+sudo ufw allow 'Nginx HTTP'
+# Check if the location block already exists
+if ! grep -q "error_page 404 /error_404.html;" "$config_file"; then
+    new_string=$(cat <<-EOL
+        server_name _;
+
+        error_page 404 /error_404.html;
+
+        location /redirect_me {
+            return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+        }
+EOL
+    )
+
+    # Use awk to replace the "server_name _;" line with the new configuration block
+    awk -v new_string="$new_string" '/server_name _;/ { print new_string; next }1' "$config_file" > "$config_file.tmp"
+
+    # Replace the original configuration file with the temporary file
+    sudo mv "$config_file.tmp" "$config_file"
+fi
+# adding x-serverd-by header
+# Check if the location block already exists
+if ! grep -q "add_header X-Served-By" "$config_file"; then
+    new_string=$(cat <<-EOL
+\t\t# as directory, then fall back to displaying a 404.
+\t\tadd_header X-Served-By "$name";
+EOL
+    )
+
+    # Use awk to replace the "server_name _;" line with the new configuration block
+    awk -v new_string="$new_string" '/# as directory, then fall back to displaying a 404./ { print new_string; next }1' "$config_file" > "$config_file.tmp"
+
+    # Replace the original configuration file with the temporary file
+    sudo mv "$config_file.tmp" "$config_file"
+fi
+sudo service nginx restart
