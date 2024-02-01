@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 # 0. Give me a page!
+# specifying a hostname the server uses to identify itself
+echo "ServerName localhost" >> /etc/apache2.conf
+# restarting the server to use the new config.
 sudo service apache2 start
