@@ -33,7 +33,7 @@ frontend http_frontend
         bind *:80
         bind *:443 ssl crt /etc/haproxy/cert.pem
         http-request set-header X-Forwarded-Proto https
-        http-request redirect scheme https unless { ssl_fc }
+        http-request redirect scheme https code 301 unless { ssl_fc }
         stats uri /haproxy?statistics
         default_backend http_backend
 backend http_backend
