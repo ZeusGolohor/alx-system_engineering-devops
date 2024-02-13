@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# write a Bash script that accepts one argument
+
+if [ $# -eq 1 ]; then
+	sudo -u "$1" whoami
+fi
