@@ -6,6 +6,7 @@ TODO list progress.
 """
 import requests
 import sys
+import csv
 
 
 def get_todo(id=None):
@@ -13,13 +14,26 @@ def get_todo(id=None):
     A method to get an eployee's todo list.
     """
     if (id is not None):
-        res = requests.get('https://jsonplaceholder.typicode.com/users/{}/todos'.format(id))
-        user = requests.get('https://jsonplaceholder.typicode.com/users/{}'.format(id))
+        r = requests.get('https://jsonplaceholder.typicode.com/users/{}/todos'
+                         .format(id))
+        user = requests.get('https://jsonplaceholder.typicode.com/users/{}'
+                            .format(id))
         done = []
         all = []
-        if (res.status_code == 200):
+        if (r.status_code == 200):
             user = user.json()
-            print(res.json())
+            for val in r.json():
+                val['userName'] = user['name']
+                all.append(val)
+            csv_file = '{}.csv'.format(user['id'])
+            fieldnames = ['userId', 'userName', 'completed', 'title']
+            with open(csv_file, mode='w', newline='') as file:
+                writer = csv.DictWriter(file, fieldnames=fieldnames,
+                                        quoting=csv.QUOTE_ALL)
+                for row in all:
+                    filtered_row = {key: value for key, value
+                                    in row.items() if key in fieldnames}
+                    writer.writerow(filtered_row)
 
 
 if __name__ == '__main__':
