@@ -13,15 +13,15 @@ def get_todo(id=None):
     A method to get an eployee's todo list.
     """
     if (id is not None):
-        res = requests.get('https://jsonplaceh\
-                older.typicode.com/users/{}/todos'.format(id))
-        user = requests.get('https://jsonplaceh\
-                older.typicode.com/users/{}'.format(id))
+        r = requests.get('https://jsonplaceholder.typicode.com/users/{}/todos'
+                         .format(id))
+        user = requests.get('https://jsonplaceholder.typicode.com/users/{}'
+                            .format(id))
         done = []
         all = []
-        if (res.status_code == 200):
+        if (r.status_code == 200):
             user = user.json()
-            for value in res.json():
+            for value in r.json():
                 if (value['completed'] is True):
                     done.append(value['title'])
                 all.append(value['title'])
