@@ -3,8 +3,8 @@
 A script to get tasks from all employees
 and exports the data to JSON files.
 """
-import requests
 import json
+import requests
 
 
 def get_todo_for_all_users():
