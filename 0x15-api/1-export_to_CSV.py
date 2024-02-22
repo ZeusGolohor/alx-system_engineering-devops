@@ -4,9 +4,9 @@ A script that, using this REST API, for a given
 employee ID, returns information about his/her
 TODO list progress.
 """
+import csv
 import requests
 import sys
-import csv
 
 
 def get_todo(id=None):
@@ -37,6 +37,6 @@ def get_todo(id=None):
 
 
 if __name__ == '__main__':
-    if (len(sys.argv) >= 1):
+    if (len(sys.argv) >= 2):
         id = sys.argv[1]
         get_todo(id)
