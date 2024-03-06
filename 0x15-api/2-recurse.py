@@ -3,6 +3,7 @@
 A script that queries the Reddit API and returns a list.
 """
 import requests
+after = None
 
 
 def recurse(subreddit, hot_list=[]):
@@ -10,12 +11,12 @@ def recurse(subreddit, hot_list=[]):
     A method that queries tge Reddit API.
     """
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
+    headers = {'User-Agent': 'zeusgolohor360'}
 
-    params = {'limit': 100}
+    pms = {'limit': 100}
     if after:
         params['after'] = after
-    response = requests.get(url, headers=headers, params=params)
+    response = requests.get(url, headers=headers, params=pms)
     if response.status_code != 200:
         return None
     data = response.json()
